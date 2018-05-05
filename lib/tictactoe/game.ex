@@ -10,10 +10,10 @@ defmodule Tictactoe.Game do
   )
 
   def new_game() do
-    %Tictactoe.Game{}
+    %Game{}
   end
 
-  def make_move(game = %Game{ whos_turn: who}, who, x, y)  do
+  def make_move(game = %Game{ whos_turn: who }, who, x, y)  do
     index = convert_to_tuple_index(x, y)
     accept_move(game, who, index, tuple_nil_at(game.board, index))
   end
@@ -49,12 +49,27 @@ defmodule Tictactoe.Game do
     check_board(game.board)
   end
 
-  defp check_board({:x, :x, :x, nil, nil, nil, :o, :o, nil}) do
-    :xwins
+  defp check_board({:x, :x, :x, _, _, _, _, _, _}), do: :x_wins
+  defp check_board({_, _, _, :x, :x, :x, _, _, _}), do: :x_wins
+  defp check_board({_, _, _, _, _, _, :x, :x, :x}), do: :x_wins
+  defp check_board({:x, _, _, :x, _, _, :x, _, _}), do: :x_wins
+  defp check_board({_, :x, _, _, :x, _, _, :x, _}), do: :x_wins
+  defp check_board({_, _, :x, _, _, :x, _, _, :x}), do: :x_wins
+  defp check_board({:x, _, _, _, :x, _, _, _, :x}), do: :x_wins
+  defp check_board({_, _, :x, _, :x, _, :x, _, _}), do: :x_wins
+  defp check_board({:o, :o, :o, _, _, _, _, _, _}), do: :o_wins
+  defp check_board({_, _, _, :o, :o, :o, _, _, _}), do: :o_wins
+  defp check_board({_, _, _, _, _, _, :o, :o, :o}), do: :o_wins
+  defp check_board({:o, _, _, :o, _, _, :o, _, _}), do: :o_wins
+  defp check_board({_, :o, _, _, :o, _, _, :o, _}), do: :o_wins
+  defp check_board({_, _, :o, _, _, :o, _, _, :o}), do: :o_wins
+  defp check_board({:o, _, _, _, :o, _, _, _, :o}), do: :o_wins
+  defp check_board({_, _, :o, _, :o, _, :o, _, _}), do: :o_wins
+  defp check_board({a, b, c, d, e, f, g, h, i}) when
+    a != nil and b != nil and c != nil and d != nil and e != nil and f != nil and g != nil and h != nil and i != nil do
+    :draw
   end
 
-  defp check_board(_dontmatter) do
-    :in_progress
-  end
+  defp check_board(_dontmatter), do: :in_progress
 
 end
