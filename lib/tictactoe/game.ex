@@ -1,5 +1,8 @@
 defmodule Tictactoe.Game do
 
+  alias Tictactoe.Game
+
+
   defstruct(
     game_state: :initializing,
     board: {nil, nil, nil, nil, nil, nil, nil, nil, nil},
@@ -10,12 +13,12 @@ defmodule Tictactoe.Game do
     %Tictactoe.Game{}
   end
 
-  def make_move(game = %{ whos_turn: who}, who, x, y)  do
+  def make_move(game = %Game{ whos_turn: who}, who, x, y)  do
     index = convert_to_tuple_index(x, y)
     accept_move(game, who, index, tuple_nil_at(game.board, index))
   end
 
-  def make_move(game, _invalid, _x, _y) do
+  def make_move(game = %Game{}, _invalid, _x, _y) do
     Map.put(game, :game_state, :invalid_player)
   end
 
@@ -27,7 +30,7 @@ defmodule Tictactoe.Game do
     nil == elem(tuple, index)
   end
 
-  defp accept_move(game, who, index, true) do
+  defp accept_move(game = %Game{}, who, index, true) do
     new_board = game.board |> put_elem(index, who)
     game = Map.put(game, :board, new_board)
     |> Map.put(:whos_turn, rotate_player(who))
@@ -35,14 +38,14 @@ defmodule Tictactoe.Game do
     Map.put(game, :game_state, game_state)
   end
 
-  defp accept_move(game, who, index, _false) do
+  defp accept_move(game = %Game{}, who, index, _false) do
     Map.put(game, :game_state, :already_used)
   end
 
   defp rotate_player(:x), do: :o
   defp rotate_player(:o), do: :x
 
-  defp update_game_state(game) do
+  defp update_game_state(game = %Game{}) do
     check_board(game.board)
   end
 
