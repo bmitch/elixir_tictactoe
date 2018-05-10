@@ -16,9 +16,7 @@ defmodule Tictactoe.BoardChecker do
   def check_board({:o, _, _, _, :o, _, _, _, :o}), do: :o_wins
   def check_board({_, _, :o, _, :o, _, :o, _, _}), do: :o_wins
 
-  def check_board({a, b, c, d, e, f, g, h, i})
-      when a != nil and b != nil and c != nil and d != nil and e != nil and f != nil and g != nil and
-             h != nil and i != nil do
+  def check_board({a, b, c, d, e, f, g, h, i}) when nil not in [a, b, c, d, e, f, g, h, i] do
     :draw
   end
 

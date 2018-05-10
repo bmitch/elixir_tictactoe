@@ -1,5 +1,5 @@
 defmodule Tictactoe.Game do
-  alias Tictactoe.Game
+  alias __MODULE__
   alias Tictactoe.BoardChecker
 
   defstruct(
