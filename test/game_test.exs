@@ -38,20 +38,20 @@ defmodule GameTest do
 
   test "if o tries to make the first move the game state is :invalid_player" do
     game = Game.new_game()
-    game = Tictactoe.make_move(game, :o, 0 ,0)
+    game = Tictactoe.make_move(game, :o, 0, 0)
     assert game.game_state == :invalid_player
     assert game.board == {nil, nil, nil, nil, nil, nil, nil, nil, nil}
   end
 
   test "if x or o is not the whos_turn player and makes a move then the game state is :invalid_player" do
     game = Game.new_game()
-    game = Tictactoe.make_move(game, :o, 0 ,0)
+    game = Tictactoe.make_move(game, :o, 0, 0)
     assert game.game_state == :invalid_player
     game = Tictactoe.make_move(game, :x, 0, 0)
     game = Tictactoe.make_move(game, :x, 1, 0)
     assert game.game_state == :invalid_player
-    game = Tictactoe.make_move(game, :o, 1 ,0)
-    game = Tictactoe.make_move(game, :o, 0 ,1)
+    game = Tictactoe.make_move(game, :o, 1, 0)
+    game = Tictactoe.make_move(game, :o, 0, 1)
     assert game.game_state == :invalid_player
     assert game.board == {:x, :o, nil, nil, nil, nil, nil, nil, nil}
   end
@@ -254,69 +254,131 @@ defmodule GameTest do
   test "the board can be filled up and results in a draw" do
     game = Game.new_game()
     game = Tictactoe.make_move(game, :x, 0, 0)
+
     assert game.board == {
-      :x,  nil, nil,
-      nil, nil, nil,
-      nil, nil, nil
-    }
+             :x,
+             nil,
+             nil,
+             nil,
+             nil,
+             nil,
+             nil,
+             nil,
+             nil
+           }
 
     game = Tictactoe.make_move(game, :o, 1, 0)
+
     assert game.board == {
-      :x,  :o, nil,
-      nil, nil, nil,
-      nil, nil, nil
-    }
+             :x,
+             :o,
+             nil,
+             nil,
+             nil,
+             nil,
+             nil,
+             nil,
+             nil
+           }
 
     game = Tictactoe.make_move(game, :x, 2, 0)
+
     assert game.board == {
-      :x,  :o, :x,
-      nil, nil, nil,
-      nil, nil, nil
-    }
+             :x,
+             :o,
+             :x,
+             nil,
+             nil,
+             nil,
+             nil,
+             nil,
+             nil
+           }
 
     game = Tictactoe.make_move(game, :o, 1, 1)
+
     assert game.board == {
-      :x,  :o, :x,
-      nil, :o, nil,
-      nil, nil, nil
-    }
+             :x,
+             :o,
+             :x,
+             nil,
+             :o,
+             nil,
+             nil,
+             nil,
+             nil
+           }
 
     game = Tictactoe.make_move(game, :x, 0, 1)
+
     assert game.board == {
-      :x,  :o, :x,
-      :x,  :o, nil,
-      nil, nil, nil
-    }
+             :x,
+             :o,
+             :x,
+             :x,
+             :o,
+             nil,
+             nil,
+             nil,
+             nil
+           }
 
     game = Tictactoe.make_move(game, :o, 0, 2)
+
     assert game.board == {
-      :x,  :o, :x,
-      :x,  :o, nil,
-      :o, nil, nil
-    }
+             :x,
+             :o,
+             :x,
+             :x,
+             :o,
+             nil,
+             :o,
+             nil,
+             nil
+           }
 
     game = Tictactoe.make_move(game, :x, 1, 2)
+
     assert game.board == {
-      :x,  :o, :x,
-      :x,  :o, nil,
-      :o,  :x, nil
-    }
+             :x,
+             :o,
+             :x,
+             :x,
+             :o,
+             nil,
+             :o,
+             :x,
+             nil
+           }
 
     game = Tictactoe.make_move(game, :o, 2, 2)
+
     assert game.board == {
-      :x,  :o, :x,
-      :x,  :o, nil,
-      :o,  :x, :o
-    }
+             :x,
+             :o,
+             :x,
+             :x,
+             :o,
+             nil,
+             :o,
+             :x,
+             :o
+           }
 
     game = Tictactoe.make_move(game, :x, 2, 1)
+
     assert game.board == {
-      :x,  :o, :x,
-      :x,  :o, :x,
-      :o,  :x, :o
-    }
+             :x,
+             :o,
+             :x,
+             :x,
+             :o,
+             :x,
+             :o,
+             :x,
+             :o
+           }
+
     assert game.game_state == :draw
-
   end
-
 end

@@ -1,5 +1,4 @@
 defmodule Tictactoe.Game do
-
   alias Tictactoe.Game
   alias Tictactoe.BoardChecker
 
@@ -11,7 +10,7 @@ defmodule Tictactoe.Game do
 
   def new_game(), do: %Game{}
 
-  def make_move(game = %Game{ whos_turn: who }, who, x, y)  do
+  def make_move(game = %Game{whos_turn: who}, who, x, y) do
     index = convert_to_tuple_index(x, y)
     accept_move(game, who, index, tuple_nil_at(game.board, index))
   end
@@ -26,8 +25,11 @@ defmodule Tictactoe.Game do
 
   defp accept_move(game = %Game{}, who, index, true) do
     new_board = game.board |> put_elem(index, who)
-    game = Map.put(game, :board, new_board)
-    |> Map.put(:whos_turn, rotate_player(who))
+
+    game =
+      Map.put(game, :board, new_board)
+      |> Map.put(:whos_turn, rotate_player(who))
+
     Map.put(game, :game_state, update_game_state(game))
   end
 
